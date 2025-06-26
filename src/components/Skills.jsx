@@ -31,7 +31,7 @@ export default function Skills({ lang }) {
   return (
     <section className="p-8 relative">
       <h2 className="text-3xl text-center mb-8">{content[lang].skillsTitle}</h2>
-      <div className="absolute left-[30px] top-0 w-[30%] h-screen ">
+      <div className="absolute left-[30px] top-0 w-[30%] h-screen hidden lg:block">
         <img className="w-14 absolute left-4 top-[5%] rotate-[5deg]" src={iconReact} alt="reactjs" />
         <img className="w-14 absolute left-[30%] top-[20%] -rotate-[10deg]" src={iconVue} alt="vuejs" />
         <img className="w-14 absolute left-[10%] top-[45%] rotate-[12deg]" src={iconPhp} alt="php" />
@@ -56,7 +56,7 @@ export default function Skills({ lang }) {
           </div>
         ))}
       </div>
-      <div className="absolute right-[0px] top-0 w-[20%] h-screen ">
+      <div className="absolute right-[0px] top-0 w-[20%] h-screen hidden lg:block">
         <img className="w-24 absolute left-4 top-[5%] rotate-[5deg]" src={iconFirebase} alt="firebase" />
         <img className="w-14 absolute left-[30%] top-[20%] -rotate-[10deg]" src={iconLaravel} alt="laravel" />
         <img className="w-14 absolute left-[10%] top-[45%] rotate-[12deg]" src={iconNode} alt="node" />

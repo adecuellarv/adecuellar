@@ -13,7 +13,8 @@ export const content = {
     },
     portfolio: 'Portfolio',
     categories: ['All', 'FullStack', 'Frontend'],
-    showmore: 'Show website'
+    showmore: 'Show website',
+    copied: 'Copied'
   },
   es: {
     aboutTitle: 'Sobre mí',
@@ -29,6 +30,7 @@ export const content = {
     },
     portfolio: 'Portafolio',
     categories: ['Todos', 'FullStack', 'Frontend'],
-    showmore: 'Ver sitio'
+    showmore: 'Ver sitio',
+    copied: 'Copiado'
   }
 };
