@@ -1,8 +1,10 @@
 // src/components/Banner.jsx
 import React, { useState } from "react";
 import { Download, Send, Copy, PhoneCall } from "lucide-react"
+import { Toaster, toast } from "sonner";
 import { content } from '../content';
 import imgGit from './img/github.webp'
+import yoSite from './img/yosite.png'
 
 export default function Banner({ lang }) {
   const [copiedEmail, setCopiedEmail] = useState(false);
@@ -11,6 +13,7 @@ export default function Banner({ lang }) {
   const copyToClipboard = (text, setCopied) => {
     navigator.clipboard.writeText(text);
     setCopied(true);
+    toast.info(content[lang].copied)
     setTimeout(() => setCopied(false), 2000);
   };
 
@@ -23,7 +26,7 @@ export default function Banner({ lang }) {
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6">{content[lang].hero.name}</h1>
             <p className="text-lg md:text-xl text-white/90 mb-8 max-w-lg">{content[lang].hero.description}</p>
             <a
-              href={content[lang] === 'es' ? "/CVAde-Esp.pdf" :  "/CVAdela-en.pdf"}
+              href={lang === 'es' ? "https://adeev.com.mx/adecuellar/CVAde-Esp.pdf" :  "https://adeev.com.mx/adecuellar/CVAdela-en.pdf"}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center px-8 py-4 text-white rounded-full font-semibold hover:bg-gray-100 transition-colors neon-glow bg-gradient-to-r from-purple-900 to-pink-700"
@@ -36,7 +39,7 @@ export default function Banner({ lang }) {
             <div className="flex justify-center">
               <div className="relative">
                 <img
-                  src="https://adeev.com.mx/adecuellar/static/media/ade.6c798fa690bd6a6e2da7.png"
+                  src={yoSite}
                   alt="Ade Cuellar"
                   className="w-80 h-80 md:w-96 md:h-96 rounded-full object-cover border-4 border-white/20 neon-glow"
                 />
@@ -60,7 +63,7 @@ export default function Banner({ lang }) {
                 >
                   <Copy size={18} />
                 </button>
-                {copiedEmail && <span className="text-xs ml-2 text-gray-100">{content[lang].copied}</span>}
+                {false && <span className="text-xs ml-2 text-gray-100">{content[lang].copied}</span>}
               </div>
 
               <div className="flex items-center gap-2 bg-gradient-to-r from-purple-900 to-pink-700 rounded-full px-6 py-4 neon-glow text-white">
@@ -79,14 +82,14 @@ export default function Banner({ lang }) {
                 >
                   <Copy size={18} />
                 </button>
-                {copiedPhone && <span className="text-xs ml-2 text-gray-100">{content[lang].copied}</span>}
+                {false && <span className="text-xs ml-2 text-gray-100">{content[lang].copied}</span>}
               </div>
             </div>
           </div>
         </div>
       </div>
       <div 
-        className="absolute bottom-[140px] right-[20px] flex gap-1 cursor-pointer"
+        className="absolute top-[0px] right-[20px] flex gap-1 cursor-pointer"
         onClick={() => {
           window.open('https://github.com/adecuellarv', '_blank');
         }}
@@ -94,6 +97,7 @@ export default function Banner({ lang }) {
         <label>Github</label>
         <img className="w-[30px]" src={imgGit} alt="git" />
       </div>
+      <Toaster position="top-left" richColors />
     </section>
   );
 }

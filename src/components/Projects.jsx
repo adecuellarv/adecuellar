@@ -51,10 +51,10 @@ export default function Projects({ lang }) {
               className={`flex flex-col-reverse md:flex-row ${index % 2 === 1 ? 'md:flex-row-reverse' : ''
                 } items-center gap-6`}
             >
-              <div className="flex-1">
+              <div className="flex-1 w-full">
                 <h3 className="text-cyan-400 font-bold text-sm uppercase mb-2">{project?.category}</h3>
                 <h4 className="text-2xl font-semibold mb-2">{project.title}</h4>
-                <p className="text-gray-300 mb-4 text-sm leading-relaxed">
+                <p className="text-gray-300 mb-4 text-lg leading-relaxed">
                   {project[lang]?.description
                   }
                 </p>
@@ -64,7 +64,7 @@ export default function Projects({ lang }) {
                   </a>
                 }
               </div>
-              <div className="relative w-full w-[60%]">
+              <div className="relative w-[60%]">
                 <div className="absolute top-4 left-4 w-full h-full bg-cyan-400 rounded-2xl z-0" />
                 <img
                   src={project.image}
@@ -94,14 +94,12 @@ export default function Projects({ lang }) {
 
             <h2 className="text-cyan-400 text-xl font-semibold mb-4">{selectedProject.title}</h2>
 
-            {/* Slider manual si hay varias imágenes */}
             <div className="overflow-hidden rounded-lg">
               <img
                 src={selectedProject.image}
                 alt={selectedProject.title}
                 className="w-full object-cover rounded-lg"
               />
-              {/* Puedes expandir a múltiples imágenes con un carrusel simple aquí */}
             </div>
 
             <p className="mt-4 text-gray-300 text-sm">{selectedProject.description}</p>
