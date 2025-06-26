@@ -10,11 +10,14 @@ export const content = {
       name: "Ade Cuellar",
       description: "I am a passionate developer with experience in creating modern and scalable web applications.",
       downloadCV: "Download CV",
-    }
+    },
+    portfolio: 'Portfolio',
+    categories: ['All', 'FullStack', 'Frontend'],
+    showmore: 'Show website'
   },
   es: {
     aboutTitle: 'Sobre mí',
-    aboutText: 'Soy un desarrollador web full-stack con más de 10 años de experiencia.',
+    aboutText: 'Soy una desarrolladora full-stack con más de 10 años de experiencia.',
     skillsTitle: 'Mis habilidades',
     projectsTitle: 'Mis Proyectos',
     projectCategories: ['Web', 'Móvil', 'Android', 'Backend', 'Webflow'],
@@ -23,6 +26,9 @@ export const content = {
       name: "Ade Cuellar",
       description: "Soy un desarrolladora apasionado con experiencia en crear aplicaciones web modernas y escalables.",
       downloadCV: "Descargar CV",
-    }
+    },
+    portfolio: 'Portafolio',
+    categories: ['Todos', 'FullStack', 'Frontend'],
+    showmore: 'Ver sitio'
   }
 };

@@ -19,11 +19,11 @@ export default function Banner({ lang }) {
         <div className="flex justify-center">
           <div className="relative">
             <img
-              src="https://picsum.photos/400/400?random=hero"
-              alt="Devon Lane"
+              src="https://adeev.com.mx/adecuellar/static/media/ade.6c798fa690bd6a6e2da7.png"
+              alt="Ade Cuellar"
               className="w-80 h-80 md:w-96 md:h-96 rounded-full object-cover border-4 border-white/20 neon-glow"
             />
-            <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-primary/20 to-transparent"></div>
+            <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-primary/20 to-transparent opacity-[.2]"></div>
           </div>
         </div>
       </div>
