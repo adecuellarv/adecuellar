@@ -33,7 +33,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="es" className={`${inter.variable} ${spaceGrotesk.variable} bg-background`}>
+    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable} bg-background`}>
       <body className="font-sans">
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}

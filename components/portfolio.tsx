@@ -7,6 +7,7 @@ import { ArrowUpRight } from 'lucide-react'
 import { Reveal } from '@/components/reveal'
 import { useLang } from '@/components/lang-provider'
 import { PROJECTS, type Category, type Project } from '@/lib/content'
+import { assetPath } from '@/lib/utils'
 
 type Filter = 'all' | Category
 
@@ -98,7 +99,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       <div className="relative aspect-[16/10] overflow-hidden">
         <motion.div style={{ y }} className="absolute inset-x-0 -top-[8%] bottom-[-8%]">
           <Image
-            src={project.image || '/placeholder.svg'}
+            src={assetPath(project.image || '/placeholder.svg')}
             alt={project.title}
             fill
             sizes="(max-width: 640px) 100vw, 50vw"

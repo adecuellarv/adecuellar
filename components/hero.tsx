@@ -8,6 +8,7 @@ import { GithubIcon } from '@/components/github-icon'
 import { useLang } from '@/components/lang-provider'
 import { Magnetic } from '@/components/magnetic'
 import { CONTACT } from '@/lib/content'
+import { assetPath } from '@/lib/utils'
 
 export function Hero() {
   const { t, lang } = useLang()
@@ -109,7 +110,7 @@ export function Hero() {
           >
             <Magnetic strength={0.4}>
               <a
-                href={lang === 'es' ? '/cv-es.pdf' : '/cv-en.pdf'}
+                href={assetPath(lang === 'es' ? '/cv-es.pdf' : '/cv-en.pdf')}
                 target="_blank"
                 rel="noreferrer"
                 className="group inline-flex cursor-pointer items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-shadow hover:shadow-[0_0_40px_-8px] hover:shadow-primary"
@@ -141,7 +142,7 @@ export function Hero() {
             <div className="absolute -inset-6 rounded-[2rem] bg-gradient-to-tr from-primary/40 via-transparent to-secondary/40 blur-2xl" />
             <div className="relative aspect-square w-64 overflow-hidden rounded-[2rem] border border-border bg-card sm:w-80">
               <Image
-                src="/images/profile.png"
+                src={assetPath('/images/profile.png')}
                 alt="Ade Cuellar"
                 fill
                 priority

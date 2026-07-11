@@ -12,7 +12,7 @@ type Ctx = {
 const LangContext = createContext<Ctx | null>(null)
 
 export function LangProvider({ children }: { children: ReactNode }) {
-  const [lang, setLang] = useState<Lang>('es')
+  const [lang, setLang] = useState<Lang>('en')
   const toggle = () => setLang((l) => (l === 'es' ? 'en' : 'es'))
   return (
     <LangContext.Provider value={{ lang, toggle, t: COPY[lang] }}>{children}</LangContext.Provider>
