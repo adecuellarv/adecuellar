@@ -128,14 +128,44 @@ export const PROJECTS: Project[] = [
     descEs: 'Sistema para gestionar pagos de clientes, así como reportes de sus servicios.',
     descEn: 'System for managing customer payments, as well as reports on their services.',
   },
+  {
+    title: 'Piter',
+    category: 'FullStack',
+    image: '/images/piter.png',
+    tags: ['React Native', 'Firebase', 'APIs REST', 'Geolocalización'],
+    descEs:
+      'Aplicación móvil de directorio de negocios con geolocalización, filtros y búsqueda avanzada, y consumo de APIs REST para mostrar productos y servicios cercanos al usuario.',
+    descEn:
+      'Mobile business-directory app with geolocation, advanced search filters, and REST API integration to surface nearby products and services.',
+  },
+  {
+    title: 'Control Central Car',
+    category: 'FullStack',
+    image: '/images/ccc.png',
+    tags: ['React', 'Supabase', 'React Native'],
+    descEs:
+      'Plataforma para la gestión de talleres mecánicos: control de entrada de vehículos, seguimiento de servicios, diagnósticos técnicos y administración de clientes.',
+    descEn:
+      'Platform for managing auto repair shops: vehicle intake tracking, service follow-up, technical diagnostics, and customer administration.',
+  },
+  {
+    title: 'BudsiDesk',
+    category: 'FullStack',
+    image: '/images/budsidesk.png',
+    tags: ['Python', 'Django', 'PostgreSQL'],
+    descEs:
+      'Plataforma de gestión empresarial con facturación, control de gastos, roles y permisos, y reportes financieros para pequeñas y medianas empresas.',
+    descEn:
+      'Business management platform with invoicing, expense tracking, roles and permissions, and financial reporting for small and medium businesses.',
+  },
 ]
 
 export const COPY = {
   es: {
     nav: { about: 'Sobre mí', skills: 'Habilidades', work: 'Proyectos', contact: 'Contacto' },
-    role: 'Desarrollador web full-stack',
+    role: 'Desarrolladora web full-stack',
     heroSub:
-      'Soy un desarrollador apasionado con experiencia creando aplicaciones web modernas y escalables.',
+      'Soy una desarrolladora con experiencia creando aplicaciones web modernas y escalables.',
     cv: 'Descargar CV',
     scroll: 'Desliza',
     copyEmail: 'Copiar correo',

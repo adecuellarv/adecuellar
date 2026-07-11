@@ -3,14 +3,14 @@
 import Image from 'next/image'
 import { motion, useMotionValue, useScroll, useSpring, useTransform } from 'motion/react'
 import { useRef, useState } from 'react'
-import { ArrowDown, Copy, Check, Phone, Download } from 'lucide-react'
+import { ArrowDown, Copy, Check, Download } from 'lucide-react'
 import { GithubIcon } from '@/components/github-icon'
 import { useLang } from '@/components/lang-provider'
 import { Magnetic } from '@/components/magnetic'
 import { CONTACT } from '@/lib/content'
 
 export function Hero() {
-  const { t } = useLang()
+  const { t, lang } = useLang()
   const ref = useRef<HTMLElement>(null)
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
 
@@ -109,8 +109,10 @@ export function Hero() {
           >
             <Magnetic strength={0.4}>
               <a
-                href="#contact"
-                className="group inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-shadow hover:shadow-[0_0_40px_-8px] hover:shadow-primary"
+                href={lang === 'es' ? '/cv-es.pdf' : '/cv-en.pdf'}
+                target="_blank"
+                rel="noreferrer"
+                className="group inline-flex cursor-pointer items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-shadow hover:shadow-[0_0_40px_-8px] hover:shadow-primary"
               >
                 <Download className="size-4" />
                 {t.cv}
@@ -168,7 +170,7 @@ export function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1 }}
-        className="absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 text-xs uppercase tracking-widest text-muted-foreground"
+        className="absolute bottom-8 left-1/2 flex -translate-x-1/2 cursor-pointer flex-col items-center gap-2 text-xs uppercase tracking-widest text-muted-foreground"
       >
         {t.scroll}
         <motion.span
@@ -193,10 +195,10 @@ function ContactCard() {
   }
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex flex-wrap items-center gap-2">
       <button
         onClick={() => copy(CONTACT.email, 'email')}
-        className="inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-4 py-3 text-sm text-muted-foreground backdrop-blur transition-colors hover:border-primary hover:text-foreground"
+        className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-border bg-card/60 px-4 py-3 text-sm text-muted-foreground backdrop-blur transition-colors hover:border-primary hover:text-foreground"
         aria-label={t.copyEmail}
       >
         {copied === 'email' ? (
@@ -204,20 +206,25 @@ function ContactCard() {
         ) : (
           <Copy className="size-4" />
         )}
-        <span className="hidden sm:inline">{copied === 'email' ? t.copied : 'Email'}</span>
+        <span>{copied === 'email' ? t.copied : CONTACT.email}</span>
       </button>
-      <a
-        href={`tel:${CONTACT.phone}`}
-        className="inline-flex items-center gap-2 rounded-full border border-border bg-card/60 p-3 text-muted-foreground backdrop-blur transition-colors hover:border-primary hover:text-foreground"
-        aria-label={t.call}
+      <button
+        onClick={() => copy(CONTACT.phone, 'phone')}
+        className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-border bg-card/60 px-4 py-3 text-sm text-muted-foreground backdrop-blur transition-colors hover:border-primary hover:text-foreground"
+        aria-label={t.copyPhone}
       >
-        <Phone className="size-4" />
-      </a>
+        {copied === 'phone' ? (
+          <Check className="size-4 text-primary" />
+        ) : (
+          <Copy className="size-4" />
+        )}
+        <span>{copied === 'phone' ? t.copied : CONTACT.phone}</span>
+      </button>
       <a
         href={CONTACT.github}
         target="_blank"
         rel="noreferrer"
-        className="inline-flex items-center gap-2 rounded-full border border-border bg-card/60 p-3 text-muted-foreground backdrop-blur transition-colors hover:border-primary hover:text-foreground"
+        className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-border bg-card/60 p-3 text-muted-foreground backdrop-blur transition-colors hover:border-primary hover:text-foreground"
         aria-label="Github"
       >
         <GithubIcon className="size-4" />

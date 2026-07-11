@@ -42,7 +42,7 @@ export function Portfolio() {
                 <button
                   key={f.id}
                   onClick={() => setFilter(f.id)}
-                  className="relative rounded-full px-4 py-2 text-sm font-medium transition-colors"
+                  className="relative cursor-pointer rounded-full px-4 py-2 text-sm font-medium transition-colors"
                 >
                   {filter === f.id && (
                     <motion.span
@@ -131,7 +131,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             href={project.url}
             target="_blank"
             rel="noreferrer"
-            className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-primary transition-colors hover:text-secondary"
+            className="mt-5 inline-flex cursor-pointer items-center gap-1.5 text-sm font-medium text-primary transition-colors hover:text-secondary"
           >
             {t.viewSite}
             <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

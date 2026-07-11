@@ -34,7 +34,7 @@ export function About() {
   const { t } = useLang()
   const stats = [
     { value: 10, suffix: '+', label: t.yearsLabel },
-    { value: 40, suffix: '+', label: t.projectsLabel },
+    //{ value: 15, suffix: '+', label: t.projectsLabel },
     { value: 15, suffix: '', label: t.stackLabel },
   ]
 

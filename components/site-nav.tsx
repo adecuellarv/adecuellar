@@ -1,6 +1,7 @@
 'use client'
 
 import { motion, useScroll, useSpring } from 'motion/react'
+import { useEffect, useState } from 'react'
 import { useLang } from '@/components/lang-provider'
 import { Magnetic } from '@/components/magnetic'
 
@@ -8,6 +9,14 @@ export function SiteNav() {
   const { lang, toggle, t } = useLang()
   const { scrollYProgress } = useScroll()
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.3 })
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   const links = [
     { id: 'about', label: t.nav.about },
@@ -21,12 +30,14 @@ export function SiteNav() {
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      className="fixed inset-x-0 top-0 z-50"
+      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
+        scrolled ? 'bg-black/40 backdrop-blur-xl' : 'bg-transparent'
+      }`}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4">
         <a
           href="#top"
-          className="font-display text-lg font-bold tracking-tight text-foreground"
+          className="cursor-pointer font-display text-lg font-bold tracking-tight text-foreground"
         >
           Ade Cuellar <span className="text-primary">{'</>'}</span>
         </a>
@@ -36,7 +47,7 @@ export function SiteNav() {
             <a
               key={l.id}
               href={`#${l.id}`}
-              className="rounded-full px-4 py-1.5 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+              className="cursor-pointer rounded-full px-4 py-1.5 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
             >
               {l.label}
             </a>
@@ -46,7 +57,7 @@ export function SiteNav() {
         <Magnetic>
           <button
             onClick={toggle}
-            className="rounded-full border border-border bg-card/60 px-4 py-1.5 text-sm font-medium backdrop-blur-xl transition-colors hover:border-primary hover:text-primary"
+            className="cursor-pointer rounded-full border border-border bg-card/60 px-4 py-1.5 text-sm font-medium backdrop-blur-xl transition-colors hover:border-primary hover:text-primary"
             aria-label="Toggle language"
           >
             {lang === 'es' ? 'EN' : 'ES'}

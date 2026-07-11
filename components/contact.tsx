@@ -39,7 +39,7 @@ export function Contact() {
             <Magnetic strength={0.4}>
               <a
                 href={`mailto:${CONTACT.email}`}
-                className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-shadow hover:shadow-[0_0_40px_-8px] hover:shadow-primary"
+                className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-shadow hover:shadow-[0_0_40px_-8px] hover:shadow-primary"
               >
                 <Mail className="size-4" />
                 {CONTACT.email}
@@ -47,7 +47,7 @@ export function Contact() {
             </Magnetic>
             <button
               onClick={() => copy(CONTACT.email)}
-              className="inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-5 py-3 text-sm text-muted-foreground backdrop-blur transition-colors hover:border-primary hover:text-foreground"
+              className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-border bg-card/60 px-5 py-3 text-sm text-muted-foreground backdrop-blur transition-colors hover:border-primary hover:text-foreground"
             >
               {copied === CONTACT.email ? (
                 <Check className="size-4 text-primary" />
@@ -61,7 +61,7 @@ export function Contact() {
           <div className="mt-6 flex items-center justify-center gap-3">
             <a
               href={`tel:${CONTACT.phone}`}
-              className="inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-5 py-2.5 text-sm text-muted-foreground backdrop-blur transition-colors hover:border-primary hover:text-foreground"
+              className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-border bg-card/60 px-5 py-2.5 text-sm text-muted-foreground backdrop-blur transition-colors hover:border-primary hover:text-foreground"
             >
               <Phone className="size-4" />
               {CONTACT.phone}
@@ -70,7 +70,7 @@ export function Contact() {
               href={CONTACT.github}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-5 py-2.5 text-sm text-muted-foreground backdrop-blur transition-colors hover:border-primary hover:text-foreground"
+              className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-border bg-card/60 px-5 py-2.5 text-sm text-muted-foreground backdrop-blur transition-colors hover:border-primary hover:text-foreground"
             >
               <GithubIcon className="size-4" />
               GitHub
