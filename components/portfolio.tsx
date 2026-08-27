@@ -2,10 +2,11 @@
 
 import Image from 'next/image'
 import { AnimatePresence, motion, useScroll, useTransform } from 'motion/react'
-import { useRef, useState } from 'react'
-import { ArrowUpRight } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
+import { ArrowUpRight, Maximize2, X } from 'lucide-react'
 import { Reveal } from '@/components/reveal'
 import { useLang } from '@/components/lang-provider'
+import { ProjectVisual } from '@/components/project-visual'
 import { PROJECTS, type Category, type Project } from '@/lib/content'
 import { assetPath } from '@/lib/utils'
 
@@ -14,6 +15,7 @@ type Filter = 'all' | Category
 export function Portfolio() {
   const { t } = useLang()
   const [filter, setFilter] = useState<Filter>('all')
+  const [active, setActive] = useState<Project | null>(null)
 
   const filters: { id: Filter; label: string }[] = [
     { id: 'all', label: t.filters.all },
@@ -70,21 +72,37 @@ export function Portfolio() {
         <motion.div layout className="mt-14 grid gap-6 sm:grid-cols-2">
           <AnimatePresence mode="popLayout">
             {visible.map((project, i) => (
-              <ProjectCard key={project.title} project={project} index={i} />
+              <ProjectCard
+                key={project.title}
+                project={project}
+                index={i}
+                onOpen={() => setActive(project)}
+              />
             ))}
           </AnimatePresence>
         </motion.div>
       </div>
+
+      <ProjectModal project={active} onClose={() => setActive(null)} />
     </section>
   )
 }
 
-function ProjectCard({ project, index }: { project: Project; index: number }) {
+function ProjectCard({
+  project,
+  index,
+  onOpen,
+}: {
+  project: Project
+  index: number
+  onOpen: () => void
+}) {
   const { lang, t } = useLang()
   const ref = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
   const y = useTransform(scrollYProgress, [0, 1], ['-8%', '8%'])
   const desc = lang === 'es' ? project.descEs : project.descEn
+  const meta = [project.company, project.period].filter(Boolean).join(' · ')
 
   return (
     <motion.div
@@ -96,24 +114,40 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       transition={{ duration: 0.5, delay: (index % 4) * 0.06, ease: [0.16, 1, 0.3, 1] }}
       className="group relative overflow-hidden rounded-3xl border border-border bg-card"
     >
-      <div className="relative aspect-[16/10] overflow-hidden">
-        <motion.div style={{ y }} className="absolute inset-x-0 -top-[8%] bottom-[-8%]">
-          <Image
-            src={assetPath(project.image || '/placeholder.svg')}
-            alt={project.title}
-            fill
-            sizes="(max-width: 640px) 100vw, 50vw"
-            className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
-          />
-        </motion.div>
+      <button
+        type="button"
+        onClick={onOpen}
+        aria-label={t.viewDetails}
+        className="relative block aspect-[16/10] w-full cursor-pointer overflow-hidden"
+      >
+        {project.image ? (
+          <motion.div style={{ y }} className="absolute inset-x-0 -top-[8%] bottom-[-8%]">
+            <Image
+              src={assetPath(project.image)}
+              alt={project.title}
+              fill
+              sizes="(max-width: 640px) 100vw, 50vw"
+              className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
+            />
+          </motion.div>
+        ) : project.visual ? (
+          <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-105">
+            <ProjectVisual kind={project.visual} />
+          </div>
+        ) : null}
         <div className="absolute inset-0 bg-gradient-to-t from-card via-card/40 to-transparent opacity-80" />
         <span className="absolute left-4 top-4 rounded-full border border-border bg-background/70 px-3 py-1 text-[11px] font-medium uppercase tracking-wider text-primary backdrop-blur">
           {project.category}
         </span>
-      </div>
+        <span className="absolute right-4 top-4 flex items-center gap-1.5 rounded-full border border-border bg-background/70 px-3 py-1.5 text-[11px] font-medium text-muted-foreground opacity-0 backdrop-blur transition-opacity group-hover:opacity-100">
+          <Maximize2 className="size-3.5" />
+          {t.viewDetails}
+        </span>
+      </button>
 
       <div className="relative p-6">
         <h3 className="font-display text-xl font-bold tracking-tight">{project.title}</h3>
+        {meta && <p className="mt-1 text-xs font-medium text-primary/80">{meta}</p>}
         <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-muted-foreground">{desc}</p>
 
         <div className="mt-4 flex flex-wrap gap-2">
@@ -127,18 +161,130 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           ))}
         </div>
 
-        {project.url && (
-          <a
-            href={project.url}
-            target="_blank"
-            rel="noreferrer"
-            className="mt-5 inline-flex cursor-pointer items-center gap-1.5 text-sm font-medium text-primary transition-colors hover:text-secondary"
+        <div className="mt-5 flex items-center gap-5">
+          {project.url && (
+            <a
+              href={project.url}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex cursor-pointer items-center gap-1.5 text-sm font-medium text-primary transition-colors hover:text-secondary"
+            >
+              {t.viewSite}
+              <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </a>
+          )}
+          <button
+            type="button"
+            onClick={onOpen}
+            className="inline-flex cursor-pointer items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
           >
-            {t.viewSite}
-            <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </a>
-        )}
+            {t.viewDetails}
+          </button>
+        </div>
       </div>
     </motion.div>
+  )
+}
+
+function ProjectModal({ project, onClose }: { project: Project | null; onClose: () => void }) {
+  const { lang, t } = useLang()
+
+  useEffect(() => {
+    if (!project) return
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose()
+    document.addEventListener('keydown', onKey)
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.removeEventListener('keydown', onKey)
+      document.body.style.overflow = ''
+    }
+  }, [project, onClose])
+
+  const desc = project ? (lang === 'es' ? project.descEs : project.descEn) : ''
+  const meta = project ? [project.company, project.period].filter(Boolean).join(' · ') : ''
+
+  return (
+    <AnimatePresence>
+      {project && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm"
+          onClick={onClose}
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.94, y: 16 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.94, y: 16 }}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            onClick={(e) => e.stopPropagation()}
+            className="relative max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-3xl border border-border bg-card"
+          >
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label={t.close}
+              className="absolute right-4 top-4 z-10 flex size-9 cursor-pointer items-center justify-center rounded-full border border-border bg-background/80 text-foreground backdrop-blur transition-colors hover:border-primary hover:text-primary"
+            >
+              <X className="size-4" />
+            </button>
+
+            <div className="relative aspect-[16/10] w-full overflow-hidden rounded-t-3xl">
+              {project.image ? (
+                <Image
+                  src={assetPath(project.image)}
+                  alt={project.title}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 640px"
+                  className="object-cover object-top"
+                />
+              ) : project.visual ? (
+                <ProjectVisual kind={project.visual} />
+              ) : null}
+            </div>
+
+            <div className="p-6 sm:p-8">
+              <span className="rounded-full border border-border bg-background/70 px-3 py-1 text-[11px] font-medium uppercase tracking-wider text-primary">
+                {project.category}
+              </span>
+              <h3 className="mt-4 font-display text-2xl font-bold tracking-tight sm:text-3xl">
+                {project.title}
+              </h3>
+              {meta && <p className="mt-1 text-sm font-medium text-primary/80">{meta}</p>}
+              <p className="mt-4 text-pretty text-sm leading-relaxed text-muted-foreground sm:text-base">
+                {desc}
+              </p>
+
+              <p className="mb-2 mt-6 text-xs font-semibold uppercase tracking-[0.15em] text-muted-foreground">
+                {t.stackUsed}
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {project.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="rounded-full bg-muted px-3 py-1.5 text-xs font-medium text-foreground"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+
+              {project.url && (
+                <a
+                  href={project.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-6 inline-flex cursor-pointer items-center gap-1.5 text-sm font-medium text-primary transition-colors hover:text-secondary"
+                >
+                  {t.viewSite}
+                  <ArrowUpRight className="size-4" />
+                </a>
+              )}
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   )
 }

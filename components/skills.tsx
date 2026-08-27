@@ -3,10 +3,10 @@
 import { motion } from 'motion/react'
 import { Reveal } from '@/components/reveal'
 import { useLang } from '@/components/lang-provider'
-import { SKILLS } from '@/lib/content'
+import { SKILLS, SKILL_CATEGORIES } from '@/lib/content'
 
 export function Skills() {
-  const { t } = useLang()
+  const { t, lang } = useLang()
 
   return (
     <section id="skills" className="relative border-t border-border py-24 md:py-32">
@@ -24,6 +24,37 @@ export function Skills() {
         <div className="mt-14 grid gap-x-12 gap-y-6 md:grid-cols-2">
           {SKILLS.map((skill, i) => (
             <SkillBar key={skill.name} name={skill.name} level={skill.level} index={i} />
+          ))}
+        </div>
+
+        <Reveal delay={0.1}>
+          <div className="mt-24 border-t border-border pt-14">
+            <h3 className="font-display text-2xl font-bold tracking-tight sm:text-3xl">
+              {t.skillsStackTitle}
+            </h3>
+            <p className="mt-3 max-w-xl text-muted-foreground">{t.skillsStackSub}</p>
+          </div>
+        </Reveal>
+
+        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {SKILL_CATEGORIES.map((cat, i) => (
+            <Reveal key={cat.key} delay={0.1 + i * 0.06}>
+              <div className="h-full rounded-2xl border border-border bg-card/50 p-6">
+                <p className="mb-4 text-xs font-semibold uppercase tracking-[0.15em] text-primary">
+                  {lang === 'es' ? cat.titleEs : cat.titleEn}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {cat.items.map((item) => (
+                    <span
+                      key={item}
+                      className="rounded-full border border-border bg-muted/60 px-3 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:border-primary hover:text-foreground"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
           ))}
         </div>
       </div>
