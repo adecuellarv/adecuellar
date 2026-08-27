@@ -207,56 +207,64 @@ function ProjectModal({ project, onClose }: { project: Project | null; onClose: 
     <AnimatePresence>
       {project && (
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm"
+          initial={{ clipPath: 'inset(0 100% 0 0)' }}
+          animate={{ clipPath: 'inset(0 0% 0 0)' }}
+          exit={{ clipPath: 'inset(0 100% 0 0)' }}
+          transition={{ duration: 0.55, ease: [0.83, 0, 0.17, 1] }}
+          className="fixed inset-0 z-[60] overflow-y-auto bg-background"
           onClick={onClose}
         >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.94, y: 16 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.94, y: 16 }}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            onClick={(e) => e.stopPropagation()}
-            className="relative max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-3xl border border-border bg-card"
-          >
-            <button
-              type="button"
-              onClick={onClose}
-              aria-label={t.close}
-              className="absolute right-4 top-4 z-10 flex size-9 cursor-pointer items-center justify-center rounded-full border border-border bg-background/80 text-foreground backdrop-blur transition-colors hover:border-primary hover:text-primary"
-            >
-              <X className="size-4" />
-            </button>
+          <div className="pointer-events-none absolute inset-0 grid-bg opacity-50" />
 
-            <div className="relative aspect-[16/10] w-full overflow-hidden rounded-t-3xl">
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label={t.close}
+            className="fixed right-5 top-5 z-10 flex size-10 cursor-pointer items-center justify-center rounded-full border border-border bg-card/80 text-foreground backdrop-blur transition-colors hover:border-primary hover:text-primary sm:right-8 sm:top-8"
+          >
+            <X className="size-4" />
+          </button>
+
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative mx-auto grid min-h-full max-w-6xl items-center gap-10 px-6 py-24 sm:px-8 md:grid-cols-2 md:gap-16 md:py-20"
+          >
+            <motion.div
+              initial={{ opacity: 0, x: -24 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              className="relative aspect-[4/3] w-full overflow-hidden rounded-3xl border border-border bg-card"
+            >
               {project.image ? (
                 <Image
                   src={assetPath(project.image)}
                   alt={project.title}
                   fill
-                  sizes="(max-width: 768px) 100vw, 640px"
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover object-top"
                 />
               ) : project.visual ? (
                 <ProjectVisual kind={project.visual} />
               ) : null}
-            </div>
+            </motion.div>
 
-            <div className="p-6 sm:p-8">
-              <span className="rounded-full border border-border bg-background/70 px-3 py-1 text-[11px] font-medium uppercase tracking-wider text-primary">
+            <motion.div
+              initial={{ opacity: 0, x: 24 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <span className="rounded-full border border-border bg-card/70 px-3 py-1 text-[11px] font-medium uppercase tracking-wider text-primary">
                 {project.category}
               </span>
-              <h3 className="mt-4 font-display text-2xl font-bold tracking-tight sm:text-3xl">
+              <h3 className="mt-4 font-display text-3xl font-bold tracking-tight sm:text-4xl">
                 {project.title}
               </h3>
-              {meta && <p className="mt-1 text-sm font-medium text-primary/80">{meta}</p>}
-              <p className="mt-4 text-pretty text-sm leading-relaxed text-muted-foreground sm:text-base">
+              {meta && <p className="mt-2 text-sm font-medium text-primary/80">{meta}</p>}
+              <p className="mt-4 text-pretty text-base leading-relaxed text-muted-foreground">
                 {desc}
               </p>
 
-              <p className="mb-2 mt-6 text-xs font-semibold uppercase tracking-[0.15em] text-muted-foreground">
+              <p className="mb-2 mt-8 text-xs font-semibold uppercase tracking-[0.15em] text-muted-foreground">
                 {t.stackUsed}
               </p>
               <div className="flex flex-wrap gap-2">
@@ -275,14 +283,14 @@ function ProjectModal({ project, onClose }: { project: Project | null; onClose: 
                   href={project.url}
                   target="_blank"
                   rel="noreferrer"
-                  className="mt-6 inline-flex cursor-pointer items-center gap-1.5 text-sm font-medium text-primary transition-colors hover:text-secondary"
+                  className="mt-8 inline-flex cursor-pointer items-center gap-1.5 text-sm font-medium text-primary transition-colors hover:text-secondary"
                 >
                   {t.viewSite}
                   <ArrowUpRight className="size-4" />
                 </a>
               )}
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
         </motion.div>
       )}
     </AnimatePresence>
